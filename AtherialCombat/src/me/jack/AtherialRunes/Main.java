@@ -10,14 +10,19 @@ import me.jack.AtherialRunes.Utils.SettingsManager;
 import me.jack.AtherialRunes.libs.ArmorEquipEvent.ArmorListener;
 import net.md_5.bungee.api.ChatColor;
 
-public class Main extends JavaPlugin {
+public class Main extends JavaPlugin 
+{
+	s
 	
 	
-	
+
 	SettingsManager settings = new SettingsManager(this);
 	public void onEnable() {    
         settings.getConfig("Config.yml").copyDefaults(true).save();
 
+
+	public void onEnable() 
+	{
 		System.out.print(ChatColor.GREEN + "Etherial Combat is working!");
 		getServer().getPluginManager().registerEvents(new ArmorListener(getConfig().getStringList("blocked")), this);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
@@ -37,16 +42,19 @@ public class Main extends JavaPlugin {
 	}
 	
 	
-	public void onDisable() {
+	public void onDisable() 
+	{
 		System.out.print(ChatColor.RED + "Etherial Combat disabled.");
 	}
 	
+
 	// Initializes Health Bar System
 	public void ActionHealth(Player p) {
 		int health = (int) p.getHealth();
 		int maxhealth = (int) p.getMaxHealth();
 		ActionBarAPI.sendActionBar(p, ChatColor.BLUE + "" + ChatColor.BOLD + "HP" + ChatColor.AQUA + health + ChatColor.BOLD + "" + ChatColor.BLUE + "/" + ChatColor.AQUA + maxhealth);
 	}
-	
 
+	private int test = 1;
+	}
 }
