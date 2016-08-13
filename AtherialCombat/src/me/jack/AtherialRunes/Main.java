@@ -31,7 +31,7 @@ public class Main extends JavaPlugin {
 		System.out.print(ChatColor.GREEN + "Etherial Combat is working!");
 		PluginManager pm = getServer().getPluginManager();
 		getServer().getPluginManager().registerEvents(new ArmorListener(getConfig().getStringList("blocked")), this);
-		pm.registerEvents(new ArmorEquipting, this);
+		//pm.registerEvents(new ArmorEquipting, this);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() 
 		{
 			// Makes sure the player has a health bar.
