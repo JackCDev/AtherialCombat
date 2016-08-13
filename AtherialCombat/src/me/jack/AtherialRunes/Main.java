@@ -2,6 +2,7 @@ package me.jack.AtherialRunes;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
@@ -14,11 +15,10 @@ public class Main extends JavaPlugin
 {
 
 	
-	
-
-	SettingsManager settings = new SettingsManager(this);
+	public SettingsManager settings;
 	public void onEnable() 
 	{
+		settings.setup(this);
 		System.out.print(ChatColor.GREEN + "Etherial Combat is working!");
 		getServer().getPluginManager().registerEvents(new ArmorListener(getConfig().getStringList("blocked")), this);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
