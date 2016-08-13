@@ -1,16 +1,37 @@
 package me.jack.AtherialRunes;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.connorlinfoot.actionbarapi.ActionBarAPI;
+
+import me.jack.AtherialRunes.Utils.SettingsManager;
+import me.jack.AtherialRunes.libs.ArmorEquipEvent.ArmorListener;
 import net.md_5.bungee.api.ChatColor;
 
 public class Main extends JavaPlugin {
 	
 	
 	
-	
-	public void onEnable() {
+	SettingsManager settings = new SettingsManager(this);
+	public void onEnable() {    
+        settings.getConfig("Config.yml").copyDefaults(true).save();
+
 		System.out.print(ChatColor.GREEN + "Etherial Combat is working!");
+		getServer().getPluginManager().registerEvents(new ArmorListener(getConfig().getStringList("blocked")), this);
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+			// Makes sure the player has a health bar.
+			@Override
+			public void run() {
+				for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+					ActionHealth(p);
+					
+				}
+				
+			}
+			
+		}, 20);
 		
 	
 	}
@@ -20,6 +41,12 @@ public class Main extends JavaPlugin {
 		System.out.print(ChatColor.RED + "Etherial Combat disabled.");
 	}
 	
+	// Initializes Health Bar System
+	public void ActionHealth(Player p) {
+		int health = (int) p.getHealth();
+		int maxhealth = (int) p.getMaxHealth();
+		ActionBarAPI.sendActionBar(p, ChatColor.BLUE + "" + ChatColor.BOLD + "HP" + ChatColor.AQUA + health + ChatColor.BOLD + "" + ChatColor.BLUE + "/" + ChatColor.AQUA + maxhealth);
+	}
 	
 
 }
