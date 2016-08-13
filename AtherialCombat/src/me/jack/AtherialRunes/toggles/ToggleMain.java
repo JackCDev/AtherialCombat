@@ -62,10 +62,15 @@ public class ToggleMain implements Listener, CommandExecutor{
 	}
 	@EventHandler
 	public void ToggleInteract(InventoryClickEvent e) {
+		String player = e.getWhoClicked().getName();
 		if(e.getInventory().getName().equals(inv.getName()));
 		if(e.getCurrentItem().getItemMeta().getDisplayName().equals("Toggle PvP")) {
 		if(e.getCurrentItem().getItemMeta().getLore().equals("Anti-PVP is currently Toggled [OFF]")) {
-			
+			settings.getConfig().set("Players." + player + ".TogglePVP", "true");
+		}
+		if(e.getCurrentItem().getItemMeta().getLore().equals("Anti-PVP is currently Toggled [OFF]")) {
+			settings.getConfig().set("Players." + player + ".TogglePVP", "false");
+		}
 		}
 	}
 	@SuppressWarnings("unused")
