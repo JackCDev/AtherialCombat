@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -22,7 +23,7 @@ import me.jack.AtherialRunes.Utils.SettingsManager;
 import me.jack.AtherialRunes.libs.ArmorEquipEvent.ArmorListener;
 import net.md_5.bungee.api.ChatColor;
 
-public class Main extends JavaPlugin {
+public class Main extends JavaPlugin implements Listener{
 
 	SettingsManager settings = new SettingsManager(this);
 
@@ -30,8 +31,9 @@ public class Main extends JavaPlugin {
 	{
 		System.out.print(ChatColor.GREEN + "Etherial Combat is working!");
 		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(this, this);
+		pm.registerEvents(new ArmorEquipting(), this);
 		getServer().getPluginManager().registerEvents(new ArmorListener(getConfig().getStringList("blocked")), this);
-		//pm.registerEvents(new ArmorEquipting, this);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() 
 		{
 			// Makes sure the player has a health bar.
