@@ -12,15 +12,11 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Main extends JavaPlugin 
 {
-	s
+
 	
 	
 
 	SettingsManager settings = new SettingsManager(this);
-	public void onEnable() {    
-        settings.getConfig("Config.yml").copyDefaults(true).save();
-
-
 	public void onEnable() 
 	{
 		System.out.print(ChatColor.GREEN + "Etherial Combat is working!");
@@ -57,4 +53,4 @@ public class Main extends JavaPlugin
 
 	private int test = 1;
 	}
-}
+
