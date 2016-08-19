@@ -29,6 +29,16 @@ public class ToggleMain implements Listener, CommandExecutor{
 	public SettingsManager settings;
 	private ItemStack togglepvp;
 	Inventory inv = Bukkit.getServer().createInventory(null, 18, "Toggle Menu");
+	public ToggleMain(Main main) {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
+
+
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player p = (Player) sender;
@@ -49,12 +59,12 @@ public class ToggleMain implements Listener, CommandExecutor{
 	public void Toggle(Player pl, Plugin p) {
 		Inventory inv = Bukkit.getServer().createInventory(null, 18, ChatColor.DARK_GRAY + "Toggle Menu");
 		String player = pl.getName();
-			if(settings.getConfig().get("Players." + player + ".TogglePVP", "true") != null) {
+			if(settings.getConfig().get("Players." + player + ".TogglePVP") == "true") {
 				togglepvp = createItem(Material.INK_SACK, DyeColor.GREEN, ChatColor.GREEN, "Toggle PvP", ChatColor.GREEN, "Anti-PVP is currently Toggled [ON]");
 				
 				inv.addItem(togglepvp);
 			}
-			if(settings.getConfig().get("Players." + player + ".TogglePVP", "false") != null) {
+			if(settings.getConfig().get("Players." + player + ".TogglePVP") == "false") {
 				togglepvp = createItem(Material.INK_SACK, DyeColor.RED, ChatColor.GREEN, "Toggle PvP", ChatColor.GREEN, "Anti-PVP is currently Toggled [OFF]");
 				
 				inv.addItem(togglepvp);
@@ -68,7 +78,7 @@ public class ToggleMain implements Listener, CommandExecutor{
 		if(e.getCurrentItem().getItemMeta().getLore().equals("Anti-PVP is currently Toggled [OFF]")) {
 			settings.getConfig().set("Players." + player + ".TogglePVP", "true");
 		}
-		if(e.getCurrentItem().getItemMeta().getLore().equals("Anti-PVP is currently Toggled [OFF]")) {
+		if(e.getCurrentItem().getItemMeta().getLore().equals("Anti-PVP is currently Toggled [ON]")) {
 			settings.getConfig().set("Players." + player + ".TogglePVP", "false");
 		}
 		}

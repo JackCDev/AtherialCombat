@@ -14,13 +14,15 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import me.jack.AtherialRunes.Utils.SettingsManager;
+
 public class Hitting implements Listener {
 	
 	
 	public HashMap<UUID, Integer> damage = new HashMap<UUID, Integer>();
 	
 	
-	
+	public SettingsManager settings;
 	
 	
 	
@@ -39,7 +41,32 @@ public class Hitting implements Listener {
 	        Scanner in = new Scanner(wepLore).useDelimiter("[^0-9]+");
 	        int Damage = in.nextInt();
 	        damage.put(pu, Damage);
-	        e.setDamage(damage.get(p.getUniqueId()));
+	        e.setCancelled(true);
+		}
+	}
+	@EventHandler
+	public void onPlayerHit(EntityDamageByEntityEvent e) {
+		String player = e.getDamager().getName();
+		if(e.getDamager() instanceof Player) {
+			if(e.getEntity() instanceof Player) {
+				if(settings.getConfig().get("Players." + player + ".TogglePVP") == "true") {
+					e.setDamage(damage.get(e.getDamager().getUniqueId()));
+					damage.remove(e.getDamager().getUniqueId());
+				}else{
+					e.setCancelled(true);
+					e.getDamager().sendMessage(ChatColor.YELLOW + "You have PvP toggled off so you did not do any damage to " + player + "!");
+					damage.remove(e.getDamager().getUniqueId());
+				}
+			}
+		}
+		if(e.getEntity() instanceof LivingEntity) {
+			if(!(e.getEntity() instanceof Player)) {
+				if(e.getDamager() instanceof Player) {
+					e.setDamage(damage.get(e.getDamager().getUniqueId()));
+					damage.remove(e.getDamager().getUniqueId());
+				}
+			}
+			
 	        
 			
 		}

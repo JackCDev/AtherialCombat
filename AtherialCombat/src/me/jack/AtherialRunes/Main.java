@@ -2,13 +2,13 @@ package me.jack.AtherialRunes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
-
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -22,12 +22,13 @@ import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import me.jack.AtherialRunes.ArmorSystem.ArmorEquipting;
 import me.jack.AtherialRunes.Utils.SettingsManager;
 import me.jack.AtherialRunes.libs.ArmorEquipEvent.ArmorListener;
+import me.jack.AtherialRunes.toggles.ToggleMain;
 import net.md_5.bungee.api.ChatColor;
 
 public class Main extends JavaPlugin implements Listener {
 
 	public SettingsManager settings;
-
+	Logger log = Logger.getLogger("Minecraft");
 	public void onEnable() 
 	{
 		settings.setup(this);
@@ -35,9 +36,10 @@ public class Main extends JavaPlugin implements Listener {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		pm.registerEvents(new ArmorEquipting(), this);
+		getCommand("toggle").setExecutor(new ToggleMain(this));
 		getServer().getPluginManager().registerEvents(new ArmorListener(getConfig().getStringList("blocked")), this);
 
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			// Makes sure the player has a health bar.
 			@Override
 			public void run() {
@@ -48,7 +50,7 @@ public class Main extends JavaPlugin implements Listener {
 
 			}
 
-		}, 20);
+		}, 20, 20);
 
 	}
 
